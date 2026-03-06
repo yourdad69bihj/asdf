@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="manifest.json">
+    <title>JORDAN ELITE VPN</title>
+    <style>
+        :root { --blue: #007BFF; --black: #050505; --card: #121212; --white: #FFFFFF; }
+        body { background: var(--black); color: var(--white); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        .shield-icon { font-size: 80px; color: var(--blue); text-shadow: 0 0 20px rgba(0, 123, 255, 0.5); margin-bottom: 20px; transition: 0.5s; }
+        .active-shield { color: #00FF88; text-shadow: 0 0 30px #00FF88; transform: scale(1.1); }
+
+        .status-panel { width: 85%; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid #222; margin-bottom: 30px; }
+        .status-text { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 2px; }
+        .location-val { font-size: 18px; font-weight: bold; margin-top: 10px; color: var(--blue); }
+
+        .toggle-btn { background: none; border: 2px solid var(--blue); color: var(--blue); padding: 15px 50px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px; }
+        .toggle-btn.on { background: var(--blue); color: white; box-shadow: 0 0 20px rgba(0, 123, 255, 0.4); }
+
+        .spoof-controls { margin-top: 20px; width: 85%; }
+        select { width: 100%; padding: 12px; background: #222; border: 1px solid #444; color: white; border-radius: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="shield" class="shield-icon">🛡️</div>
+
+    <div class="status-panel">
+        <div class="status-text" id="status-label">VPN DISCONNECTED</div>
+        <div class="location-val" id="ip-display">IP: 192.168.1.1 (LOCAL)</div>
+        <div class="location-val" id="loc-display">LOC: BYESVILLE, OHIO</div>
+    </div>
+
+    <button id="mainBtn" class="toggle-btn" onclick="toggleVPN()">ACTIVATE SHIELD</button>
+
+    <div class="spoof-controls">
+        <p style="font-size: 10px; color: #444; margin-bottom: 5px;">SELECT SPOOF DESTINATION</p>
+        <select id="spoofLoc" onchange="updateSpoof()">
+            <option value="REAL">Real Location (Byesville)</option>
+            <option value="NYC">New York, USA</option>
+            <option value="LDN">London, UK</option>
+            <option value="TYO">Tokyo, Japan</option>
+            <option value="PAR">Paris, France</option>
+        </select>
+    </div>
+
+    <script>
+        let isActive = false;
+
+        function toggleVPN() {
+            isActive = !isActive;
+            const shield = document.getElementById('shield');
+            const btn = document.getElementById('mainBtn');
+            const status = document.getElementById('status-label');
+            const ip = document.getElementById('ip-display');
+
+            if (isActive) {
+                shield.classList.add('active-shield');
+                btn.classList.add('on');
+                btn.innerText = "DEACTIVATE";
+                status.innerText = "VPN ENCRYPTION ACTIVE";
+                ip.innerText = "IP: 104.28.14.221 (SPOOFED)";
+            } else {
+                shield.classList.remove('active-shield');
+                btn.classList.remove('on');
+                btn.innerText = "ACTIVATE SHIELD";
+                status.innerText = "VPN DISCONNECTED";
+                ip.innerText = "IP: 192.168.1.1 (LOCAL)";
+            }
+        }
+
+        function updateSpoof() {
+            const val = document.getElementById('spoofLoc').value;
+            const loc = document.getElementById('loc-display');
+            
+            if(val === "NYC") loc.innerText = "LOC: NEW YORK, NY";
+            else if(val === "LDN") loc.innerText = "LOC: LONDON, UK";
+            else if(val === "TYO") loc.innerText = "LOC: TOKYO, JP";
+            else if(val === "PAR") loc.innerText = "LOC: PARIS, FR";
+            else loc.innerText = "LOC: BYESVILLE, OHIO";
+        }
+    </script>
+</body>
+</html>
